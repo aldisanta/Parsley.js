@@ -1829,10 +1829,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       // checkbox input case
       if (this.$element.is('input[type=checkbox]')) {
         var values = [];
-
-        this._findRelated().filter(':checked').each(function () {
-          values.push($(this).val());
-        });
+        var related = this._findRelated();
+        if (related.length > 1) {
+          related.filter(':checked').each(function () {
+            values.push($(this).val());
+          });
+        } else {
+          related.filter(':checked').each(function () {
+            values = $(this).val();
+          });
+        }
 
         return values;
       }
